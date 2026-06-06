@@ -84,3 +84,64 @@ NAT internally, so I had to use the private IP instead.
 Another issue was that apt installed a newer version of the Wazuh agent
 than the server was running, which caused registration to fail. I fixed
 this by specifying the exact version during installation.
+
+## Infrastructure
+
+**Wazuh Server**
+- AWS EC2 m7i-flex.large
+- Ubuntu 24.04 LTS
+- 30 GiB storage
+- Static Elastic IP assigned
+
+**Linux Agent**
+- AWS EC2 t3.small
+- Ubuntu 24.04 LTS
+- 8 GiB storage
+
+**Windows Agent**
+- My personal laptop
+- Intel Core i7-1255U, 16GB RAM
+- Windows 11 Home
+
+## MITRE ATT&CK Mapping
+
+| Technique ID | Technique | Detected On |
+|---|---|---|
+| T1078 | Valid Accounts | Windows Agent |
+| T1112 | Modify Registry | Windows Agent |
+| T1021 | Remote Services | Linux Agent |
+| T1098 | Account Manipulation | Both Agents |
+| T1110 | Brute Force | Linux Agent |
+| T1565 | Data Manipulation | Linux Agent |
+
+## Network Configuration
+
+| Port | Purpose |
+|---|---|
+| 22 | SSH Admin Access |
+| 443 | Wazuh Dashboard (HTTPS) |
+| 1514 | Agent Log Forwarding |
+| 1515 | Agent Registration |
+| 55000 | Wazuh REST API |
+
+## Future Improvements
+
+There are a few things I want to add to this project in the future.
+Right now the system only detects threats but does not block them
+automatically. I want to configure Wazuh active response so it
+automatically blocks attacking IP addresses during a brute-force attack.
+
+I also want to add email and SMS alerts so I get notified instantly
+when a high severity event is detected without having to check the
+dashboard manually. Integrating external threat intelligence feeds like
+VirusTotal would also help identify known malicious IP addresses
+automatically.
+
+## Project Report
+
+The full project report with all implementation details, screenshots
+and security analysis is available in the PDF file in this repository.
+
+---
+
+**Anush Rayat | Roll No: 2323450 | B.Tech CSE | IKGPTU Kapurthala**
