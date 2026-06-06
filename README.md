@@ -16,3 +16,15 @@ The idea was simple — modern systems generate thousands of log entries
 every hour and manually checking them is impossible. So I set up an
 automated system that watches for threats and raises alerts the moment
 something suspicious happens.
+
+## What I Built
+
+I set up a central Wazuh security server on an AWS EC2 instance and
+connected two machines to it as agents — my own Windows 11 laptop and
+a Linux EC2 instance. The server collects logs from both machines,
+analyzes them using detection rules, and shows everything on a live
+dashboard.
+
+I also wrote custom detection rules to catch SSH brute-force attacks
+and configured File Integrity Monitoring to detect any unauthorized
+changes to files in the /etc/ directory on the Linux machine.
