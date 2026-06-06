@@ -28,3 +28,27 @@ dashboard.
 I also wrote custom detection rules to catch SSH brute-force attacks
 and configured File Integrity Monitoring to detect any unauthorized
 changes to files in the /etc/ directory on the Linux machine.
+
+## How It Works
+
+The Wazuh agents installed on both machines continuously collect logs
+and forward them to the central server over TCP port 1514. The Wazuh
+Manager then checks these logs against thousands of built-in rules plus
+my own custom rules. When a rule matches, an alert is generated and
+appears on the dashboard instantly.
+
+All detected threats are automatically mapped to the MITRE ATT&CK
+framework which is an internationally recognized standard for
+classifying cyber threats.
+
+## Tech Stack
+
+| Component | Details |
+|---|---|
+| Security Platform | Wazuh 4.7.5 |
+| Cloud Provider | AWS EC2 (Mumbai Region) |
+| Server OS | Ubuntu 24.04 LTS |
+| Log Storage | OpenSearch |
+| Windows Agent | Windows 11 Home |
+| Linux Agent | Ubuntu 24.04 LTS |
+| Threat Framework | MITRE ATT&CK |
