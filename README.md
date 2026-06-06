@@ -52,3 +52,35 @@ classifying cyber threats.
 | Windows Agent | Windows 11 Home |
 | Linux Agent | Ubuntu 24.04 LTS |
 | Threat Framework | MITRE ATT&CK |
+
+## Testing and Results
+
+To test the system I simulated real attacks:
+
+For brute-force detection, I ran repeated SSH login attempts using a
+fake username against the Linux machine. The system detected all 24
+failed attempts and raised alerts in under 5 seconds each time.
+
+For file integrity monitoring, I created and deleted a file inside
+/etc/ on the Linux machine. Wazuh detected both the creation and
+deletion immediately and raised syscheck alerts on the dashboard.
+
+| Metric | Result |
+|---|---|
+| Total Alerts Generated | 258 |
+| Authentication Failures Detected | 24 |
+| Average Alert Response Time | Under 5 seconds |
+| Active Agents Monitored | 2 |
+| Critical Alerts (Level 12+) | 0 |
+
+## Challenges I Faced
+
+The biggest challenge was that the Wazuh installer rejected Ubuntu
+24.04 as unsupported so I had to use a bypass flag to get past the
+compatibility check. I also ran into an issue where the Wazuh Indexer
+refused to bind to the public IP of the EC2 instance because AWS uses
+NAT internally, so I had to use the private IP instead.
+
+Another issue was that apt installed a newer version of the Wazuh agent
+than the server was running, which caused registration to fail. I fixed
+this by specifying the exact version during installation.
